@@ -5,8 +5,15 @@
   "scripts": {
     "dev": "node --watch ./src/index.js"
   },
-  "keywords": [ "node", "express", "jwt" ],
+  "keywords": [
+    "node",
+    "express",
+    "jwt"
+  ],
   "author": "Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co>",
   "license": "ISC",
-  "description": "API para un ecommerce básico"
+  "description": "API para un ecommerce básico",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
