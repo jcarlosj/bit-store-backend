@@ -1,15 +1,13 @@
 const express = require( 'express' );
 const app = express();
 
+/** Middleware */
+app.use( express.static( 'views' ) );
+
 /** Definir nuestras rutas o endpoints */
 app.get( '/', function( req, res ) {        // ---> http://localhost:3000/
-    const template = `
-        <h1>Home page</h1>
-        <p>Bienvido a nuestra tienda virtual. Disfruta de todos nuestros descuentos</p>
-        <p>Uno de nuestros mejores aliados es <a href="https://amazon.com">Amazon</a></p>
-    `;
 
-    res.send( template );
+    res.sendFile( __dirname + '/views/index.html' );
 } );
 app.get( '/api/products', function( req, res ) {            // ---> http://localhost:3000/saludo
     const products = [
