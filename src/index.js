@@ -5,10 +5,8 @@ const app = express();
 app.use( express.static( 'views' ) );
 
 /** Definir nuestras rutas o endpoints */
-app.get( '/', function( req, res ) {        // ---> http://localhost:3000/
+app.use( '/', require( './routes/pages.routes' ) );
 
-    res.sendFile( __dirname + '/views/index.html' );
-} );
 app.get( '/api/products', function( req, res ) {            // ---> http://localhost:3000/saludo
     const products = [
         { name: 'Orange', description: 'It is a fruit', price: 4, stock: 10 },
