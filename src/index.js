@@ -5,17 +5,8 @@ const app = express();
 app.use( express.static( 'views' ) );
 
 /** Definir nuestras rutas o endpoints */
-app.use( '/', require( './routes/pages.routes' ) );
-
-app.get( '/api/products', function( req, res ) {            // ---> http://localhost:3000/saludo
-    const products = [
-        { name: 'Orange', description: 'It is a fruit', price: 4, stock: 10 },
-        { name: 'Apple', description: 'It is a fruit', price: 6, stock: 0 },
-        { name: 'Pineapple', description: 'It is a fruit', price: 12, stock: 3 }
-    ];
-
-    res.json( products );
-} );        
+app.use( '/', require( './routes/pages.routes' ) );                 // http://localhost:3000/
+app.use( '/api/products', require( './routes/products.routes' ) );  // http://localhost:3000/api/products  
 
 /** Lanza un servidor web usando Node/Express -> http://localhost:3000 */
 app.listen( 3000, function() {
