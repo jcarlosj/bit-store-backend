@@ -9,7 +9,39 @@ function getProducts( req, res ) {            // ---> http://localhost:3000/api/
     res.json( products );
 }
 
+function getProductById( req, res ) {
+    res.json({
+        ok: true,
+        msg: 'Obtiene un producto por ID'
+    });
+}
+
+function createProduct( req, res ) {        // Crear un nuevo producto
+    res.json({
+        ok: true,
+        msg: 'Crea un nuevo producto'
+    });
+}
+
+function updateProductById( req, res ) {
+    res.json({
+        ok: true,
+        msg: 'Actualiza el producto pr ID, actualizando todas sus representaciones'
+    });
+}
+
+function removeProductById( req, res ) {
+    res.json({
+        ok: true,
+        msg: 'Elimina el producto por ID'
+    });
+}
+
 
 module.exports = {
-    getProducts
+    getProducts,
+    getProductById,
+    createProduct,
+    updateProductById,
+    removeProductById
 };
