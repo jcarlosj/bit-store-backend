@@ -1,5 +1,7 @@
 const ProductModel = require("../models/Products");
 
+const { dbCreateProduct } = require("../services/products.service");
+
 
 function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
     const products = [
@@ -19,17 +21,29 @@ function getProductById( req, res ) {
     });
 }
 
-async function createProduct( req, res ) {        // Crear un nuevo producto
-    const inputData = req.body;
-    console.log( '>> inputData >>', inputData );
+// Crear un nuevo producto
+async function createProduct( req, res ) {        
+    const inputData = req.body;                     // Obteniendo los datos de la peticion
+    // console.log( '>> inputData >>', inputData );
 
-    const data = await ProductModel.create( inputData );       // Insertando datos en la base de datos
-    console.log( '>> data >>', data );
+    try {
+        const data = await dbCreateProduct( inputData );
+        // console.log( '>> data >>', data );
 
-    res.json({
-        ok: true,
-        data: data
-    });
+        // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
+        res.json({
+            ok: true,
+            data: data
+        });
+    } 
+    catch ( error ) {       // Capturando la excepcion
+        console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
+        res.json({                  // Enviando un objeto JSON al usuario que realizo la peticion
+            ok: false,
+            msg: 'Error al crear un producto nuevo'
+        });
+    }
+
 }
 
 function updateProductById( req, res ) {
