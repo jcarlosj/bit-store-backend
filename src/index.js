@@ -4,6 +4,7 @@ const app = express();
 
 /** Middleware */
 app.use( express.static( 'views' ) );
+app.use( express.json() );      // Ampliamos la capacidad de interpretar y entender JSON
 
 /** Definir nuestras rutas o endpoints */
 app.use( '/', require( './routes/pages.routes' ) );                         // http://localhost:3000/

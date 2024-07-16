@@ -17,9 +17,12 @@ function getProductById( req, res ) {
 }
 
 function createProduct( req, res ) {        // Crear un nuevo producto
+    const inputData = req.body;
+    console.log( '>>>', inputData );
+
     res.json({
         ok: true,
-        msg: 'Crea un nuevo producto'
+        data: inputData
     });
 }
 
