@@ -1,5 +1,5 @@
 const mongoose = require( 'mongoose' );
-
+ 
 /** Definir la estructura de datos (nuestro documento) */
 const ProductSchema = new mongoose.Schema({
     // Definir propiedades, atributos o campos (Documento)

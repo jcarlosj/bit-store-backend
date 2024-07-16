@@ -1,3 +1,6 @@
+const ProductModel = require("../models/Products");
+
+
 function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
     const products = [
         { name: 'Orange', description: 'It is a fruit', price: 4, stock: 10 },
@@ -16,13 +19,16 @@ function getProductById( req, res ) {
     });
 }
 
-function createProduct( req, res ) {        // Crear un nuevo producto
+async function createProduct( req, res ) {        // Crear un nuevo producto
     const inputData = req.body;
-    console.log( '>>>', inputData );
+    console.log( '>> inputData >>', inputData );
+
+    const data = await ProductModel.create( inputData );       // Insertando datos en la base de datos
+    console.log( '>> data >>', data );
 
     res.json({
         ok: true,
-        data: inputData
+        data: data
     });
 }
 
