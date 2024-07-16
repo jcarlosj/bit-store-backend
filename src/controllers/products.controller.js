@@ -3,15 +3,13 @@ const ProductModel = require("../models/Products");
 const { dbCreateProduct } = require("../services/products.service");
 
 
-function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
-    const products = [
-        { name: 'Orange', description: 'It is a fruit', price: 4, stock: 10 },
-        { name: 'Apple', description: 'It is a fruit', price: 6, stock: 0 },
-        { name: 'Pineapple', description: 'It is a fruit', price: 12, stock: 3 },
-        // { name: 'Lemon', description: 'It is a fruit', price: 1, stock: 300 }
-    ];
+async function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
+    const data = await ProductModel.find();
 
-    res.json( products );
+    res.json({
+        ok: true,
+        data: data
+    });
 }
 
 function getProductById( req, res ) {
