@@ -1,6 +1,6 @@
 const ProductModel = require("../models/Products");
 
-const { dbCreateProduct, dbGetProducts, dbGetProductById } = require("../services/products.service");
+const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById } = require("../services/products.service");
 
 // Obtener todos los productos
 async function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
@@ -80,15 +80,22 @@ function updateProductById( req, res ) {
 async function removeProductById( req, res ) {
     const productId = req.params.id;
 
-    // const data = await ProductModel.findOneAndDelete({ _id: productId });
-    const data = await ProductModel.findByIdAndDelete( productId );
+    try {
+        const data = await dbRemoveProductById( productId );
 
-    res.json({
-        ok: true,
-        msg: 'Elimina el producto por ID',
-        id: productId,
-        data: data
-    });
+        res.json({
+            ok: true,
+            data: data
+        });
+    } 
+    catch ( error ) {
+        console.error( error );
+        res.json({
+            ok: false,
+            msg: 'Error al eliminar un producto por ID'
+        });
+    }
+
 }
 
 
