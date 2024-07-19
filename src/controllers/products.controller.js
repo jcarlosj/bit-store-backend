@@ -61,10 +61,26 @@ async function createProduct( req, res ) {
         });
     } 
     catch ( error ) {       // Capturando la excepcion
+
+        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
+
+        /** Validamos si existen errores de validacion */
+        if( error.name === 'ValidationError' ) {
+
+            /** Iteramos el objeto de errores por su nombre de propiedad */
+            for( let property in error.errors ) {
+                // console.info( '--->>> ', property );
+                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
+            }
+
+            // console.error( errors );
+        }
+
         console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
         res.json({                  // Enviando un objeto JSON al usuario que realizo la peticion
             ok: false,
-            msg: 'Error al crear un producto nuevo'
+            msg: 'Error al crear un producto nuevo',
+            errors: errors
         });
     }
 
