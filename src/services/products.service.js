@@ -34,11 +34,22 @@ async function dbUpdateProductByIdPatch( id, updateProduct ) {
     );
 }
 
+async function dbUpdateProductByIdPut( id, updateProduct ) {
+    return await ProductModel.findOneAndReplace(
+        { _id: id },
+        updateProduct,
+        { new: true }
+    );
+
+    ProductModel.find
+}
+
 
 module.exports = {
     dbCreateProduct,
     dbGetProducts,
     dbGetProductById,
     dbRemoveProductById,
-    dbUpdateProductByIdPatch
+    dbUpdateProductByIdPatch,
+    dbUpdateProductByIdPut
 }
