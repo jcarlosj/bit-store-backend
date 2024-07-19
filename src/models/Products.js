@@ -5,24 +5,24 @@ const ProductSchema = new mongoose.Schema({
     // Definir propiedades, atributos o campos (Documento)
     name: {
         type: String,
-        required: true
+        required: [ true, 'El nombre del producto es obligatorio.' ]
     },
     description: {
         type: String
     },
     price: {
         type: Number,
-        default: 0
+        required: [ true, 'El precio es obligatorio.' ],
+        min: [ 0, 'El precio no puede ser negativo.' ]
     },
     quantity: {
         type: Number,
-        default: 1,
-        required: true
+        required: [ true, 'La cantidad es obligatoria.' ],
+        min: [ 1, 'La cantidad minima a registrar es de 1.' ]
     },
     category: {
         type: String,
-        required: true,
-        default: 'non-category'
+        required: [ true, 'La categoria es obligatoria' ],
     },
     urlImage: {
         type: String
