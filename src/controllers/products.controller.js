@@ -1,6 +1,6 @@
 const ProductModel = require("../models/Products");
 
-const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById } = require("../services/products.service");
+const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch } = require("../services/products.service");
 
 // Obtener todos los productos
 async function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
@@ -70,10 +70,43 @@ async function createProduct( req, res ) {
 
 }
 
-function updateProductById( req, res ) {
+// Actualizacion parcial del Producto
+async function updateProductByIdPatch( req, res ) {
+    const productId = req.params.id;                // Obteniendo el valor pasado por la URL como parametro
+    const inputData = req.body;                     // Obteniendo los datos de la peticion
+
+    try {
+        const data = await dbUpdateProductByIdPatch( productId, inputData );
+
+        res.json({
+            ok: true,
+            data: data
+        });
+    } 
+    catch ( error ) {
+        console.error( error );
+        res.json({
+            ok: false,
+            msg: 'Error al actualizar parcialmente el producto por ID'
+        });
+    }
+    
+}
+
+// Actualizacion total del Producto
+async function updateProductByIdPut( req, res ) {
+    const productId = req.params.id;                // Obteniendo el valor pasado por la URL como parametro
+    const inputData = req.body;                     // Obteniendo los datos de la peticion
+
+    const data = await ProductModel.findOneAndReplace(
+        { _id: productId },
+        inputData,
+        { new: true }
+    );
+
     res.json({
         ok: true,
-        msg: 'Actualiza el producto pr ID, actualizando todas sus representaciones'
+        data: data
     });
 }
 
@@ -103,6 +136,7 @@ module.exports = {
     getProducts,
     getProductById,
     createProduct,
-    updateProductById,
-    removeProductById
+    removeProductById,
+    updateProductByIdPatch,
+    updateProductByIdPut
 };

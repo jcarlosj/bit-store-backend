@@ -21,10 +21,24 @@ async function dbRemoveProductById( id ) {
     return await ProductModel.findByIdAndDelete( id );
 }
 
+async function dbUpdateProductByIdPatch( id, updateProduct ) {
+    // return await ProductModel.findOneAndUpdate(
+    //     { _id: id },                 // Objeto de consulta
+    //     { $set: updateProduct },     // Estableciendo o actualizando parcialmente los campos del objeto (Producto)
+    //     { new: true }                // Habilita mostrar los cambios actuales realizados al objeto
+    // );
+    return await ProductModel.findByIdAndUpdate(
+        id,                  // Id del objeto a encontrar
+        { $set: updateProduct },    // Estableciendo o actualizando parcialmente los campos del objeto (Producto)
+        { new: true }               // Habilita mostrar los cambios actuales realizados al objeto
+    );
+}
+
 
 module.exports = {
     dbCreateProduct,
     dbGetProducts,
     dbGetProductById,
-    dbRemoveProductById
+    dbRemoveProductById,
+    dbUpdateProductByIdPatch
 }
