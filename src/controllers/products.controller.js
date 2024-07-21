@@ -30,6 +30,13 @@ async function getProductById( req, res ) {
     try {
         const data = await dbGetProductById( productId );
 
+        if( ! data ) {
+            return res.json({
+                ok: false,
+                msg: 'Producto no encontrado'
+            });
+        }
+
         res.json({
             ok: true,
             data: data
@@ -94,6 +101,13 @@ async function updateProductByIdPatch( req, res ) {
     try {
         const data = await dbUpdateProductByIdPatch( productId, inputData );
 
+        if( ! data ) {
+            return res.json({
+                ok: false,
+                msg: 'Producto no encontrado'
+            });
+        }
+
         res.json({
             ok: true,
             data: data
@@ -130,7 +144,14 @@ async function updateProductByIdPut( req, res ) {
     const inputData = req.body;                     // Obteniendo los datos de la peticion
 
     try {
-         const data = await dbUpdateProductByIdPut( productId, inputData );
+        const data = await dbUpdateProductByIdPut( productId, inputData );
+
+        if( ! data ) {
+            return res.json({
+                ok: false,
+                msg: 'Producto no encontrado'
+            });
+        }
     
         res.json({
             ok: true,
@@ -167,6 +188,13 @@ async function removeProductById( req, res ) {
 
     try {
         const data = await dbRemoveProductById( productId );
+
+        if( ! data ) {
+            return res.json({
+                ok: false,
+                msg: 'Producto no encontrado'
+            });
+        }
 
         res.json({
             ok: true,
