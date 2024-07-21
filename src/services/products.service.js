@@ -29,8 +29,8 @@ async function dbUpdateProductByIdPatch( id, updateProduct ) {
     // );
     return await ProductModel.findByIdAndUpdate(
         id,                  // Id del objeto a encontrar
-        { $set: updateProduct },    // Estableciendo o actualizando parcialmente los campos del objeto (Producto)
-        { new: true }               // Habilita mostrar los cambios actuales realizados al objeto
+        { $set: updateProduct },                // Estableciendo o actualizando parcialmente los campos del objeto (Producto)
+        { new: true, runValidators: true }      // Habilita mostrar los cambios actuales realizados al objeto
     );
 }
 
@@ -38,10 +38,8 @@ async function dbUpdateProductByIdPut( id, updateProduct ) {
     return await ProductModel.findOneAndReplace(
         { _id: id },
         updateProduct,
-        { new: true }
+        { new: true, runValidators: true }
     );
-
-    ProductModel.find
 }
 
 

@@ -100,10 +100,25 @@ async function updateProductByIdPatch( req, res ) {
         });
     } 
     catch ( error ) {
+        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
+
+        /** Validamos si existen errores de validacion */
+        if( error.name === 'ValidationError' ) {
+
+            /** Iteramos el objeto de errores por su nombre de propiedad */
+            for( let property in error.errors ) {
+                // console.info( '--->>> ', property );
+                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
+            }
+
+            // console.error( errors );
+        }
+
         console.error( error );
         res.json({
             ok: false,
-            msg: 'Error al actualizar parcialmente el producto por ID'
+            msg: 'Error al actualizar parcialmente el producto por ID',
+            errors: errors
         });
     }
     
@@ -115,7 +130,7 @@ async function updateProductByIdPut( req, res ) {
     const inputData = req.body;                     // Obteniendo los datos de la peticion
 
     try {
-        const data = await dbUpdateProductByIdPut( productId, inputData );
+         const data = await dbUpdateProductByIdPut( productId, inputData );
     
         res.json({
             ok: true,
@@ -123,10 +138,25 @@ async function updateProductByIdPut( req, res ) {
         });
     } 
     catch ( error ) {
+        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
+
+        /** Validamos si existen errores de validacion */
+        if( error.name === 'ValidationError' ) {
+
+            /** Iteramos el objeto de errores por su nombre de propiedad */
+            for( let property in error.errors ) {
+                // console.info( '--->>> ', property );
+                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
+            }
+
+            // console.error( errors );
+        }
+
         console.error( error );
         res.json({
             ok: false,
-            msg: 'Error al actualizar totalmente el producto por ID'
+            msg: 'Error al actualizar totalmente el producto por ID',
+            errors: errors
         });
     }
 
