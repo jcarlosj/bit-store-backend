@@ -8,7 +8,7 @@ async function dbCreateProduct ( newProduct ) {
 
 async function dbGetProducts () {
     // Obteniendo todos los datos de la base de datos usando el Modelo Diseñado para esta Entidad
-    return await ProductModel.find();
+    return await ProductModel.find({});
 }
 
 async function dbGetProductById( id ) {

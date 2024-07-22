@@ -9,14 +9,14 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
         const data = await dbGetProducts();
 
         // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
-        res.json({
+        res.status( 200 ).json({
             ok: true,
             data: data
         });
     } 
     catch ( error ) {       // Capturando la excepcion
         console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
-        res.json({                  // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
+        res.status( 500 ).json({                  // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
             ok: false,
             msg: 'Error al obtener todos los productos'
         });   
@@ -31,20 +31,20 @@ async function getProductById( req, res ) {
         const data = await dbGetProductById( productId );
 
         if( ! data ) {
-            return res.json({
+            return res.status( 404 ).json({
                 ok: false,
                 msg: 'Producto no encontrado'
             });
         }
 
-        res.json({
+        res.status( 200 ).json({
             ok: true,
             data: data
         });
     } 
     catch ( error ) {
         console.error( error );
-        res.json({
+        res.status( 500 ).json({
             ok: false,
             msg: 'Error al obtener un producto por ID'
         });
@@ -62,7 +62,7 @@ async function createProduct( req, res ) {
         // console.log( '>> data >>', data );
 
         // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
-        res.json({
+        res.status( 201 ).json({
             ok: true,
             data: data
         });
@@ -84,7 +84,7 @@ async function createProduct( req, res ) {
         }
 
         console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
-        res.json({                  // Enviando un objeto JSON al usuario que realizo la peticion
+        res.status( 500 ).json({                  // Enviando un objeto JSON al usuario que realizo la peticion
             ok: false,
             msg: 'Error al crear un producto nuevo',
             errors: errors
@@ -102,13 +102,13 @@ async function updateProductByIdPatch( req, res ) {
         const data = await dbUpdateProductByIdPatch( productId, inputData );
 
         if( ! data ) {
-            return res.json({
+            return res.status( 404 ).json({
                 ok: false,
                 msg: 'Producto no encontrado'
             });
         }
 
-        res.json({
+        res.status( 200 ).json({
             ok: true,
             data: data
         });
@@ -129,7 +129,7 @@ async function updateProductByIdPatch( req, res ) {
         }
 
         console.error( error );
-        res.json({
+        res.status( 500 ).json({
             ok: false,
             msg: 'Error al actualizar parcialmente el producto por ID',
             errors: errors
@@ -147,13 +147,13 @@ async function updateProductByIdPut( req, res ) {
         const data = await dbUpdateProductByIdPut( productId, inputData );
 
         if( ! data ) {
-            return res.json({
+            return res.status( 404 ).json({
                 ok: false,
                 msg: 'Producto no encontrado'
             });
         }
     
-        res.json({
+        res.status( 200 ).json({
             ok: true,
             data: data
         });
@@ -174,7 +174,7 @@ async function updateProductByIdPut( req, res ) {
         }
 
         console.error( error );
-        res.json({
+        res.status( 500 ).json({
             ok: false,
             msg: 'Error al actualizar totalmente el producto por ID',
             errors: errors
@@ -190,20 +190,20 @@ async function removeProductById( req, res ) {
         const data = await dbRemoveProductById( productId );
 
         if( ! data ) {
-            return res.json({
+            return res.status( 404 ).json({
                 ok: false,
                 msg: 'Producto no encontrado'
             });
         }
 
-        res.json({
+        res.status( 200 ).json({
             ok: true,
             data: data
         });
     } 
     catch ( error ) {
         console.error( error );
-        res.json({
+        res.status( 500 ).json({
             ok: false,
             msg: 'Error al eliminar un producto por ID'
         });
