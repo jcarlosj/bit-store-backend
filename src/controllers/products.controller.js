@@ -8,11 +8,7 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
     try {
         const data = await dbGetProducts();
 
-        // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
-        res.status( 200 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {       // Capturando la excepcion
         console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
@@ -37,10 +33,7 @@ async function getProductById( req, res ) {
             });
         }
 
-        res.status( 200 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
         console.error( error );
@@ -61,11 +54,7 @@ async function createProduct( req, res ) {
         const data = await dbCreateProduct( inputData );
         // console.log( '>> data >>', data );
 
-        // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
-        res.status( 201 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 201, data );
     } 
     catch ( error ) {       // Capturando la excepcion
 
@@ -108,10 +97,7 @@ async function updateProductByIdPatch( req, res ) {
             });
         }
 
-        res.status( 200 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
         const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
@@ -153,10 +139,7 @@ async function updateProductByIdPut( req, res ) {
             });
         }
     
-        res.status( 200 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
         const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
@@ -196,10 +179,7 @@ async function removeProductById( req, res ) {
             });
         }
 
-        res.status( 200 ).json({
-            ok: true,
-            data: data
-        });
+        handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
         console.error( error );
