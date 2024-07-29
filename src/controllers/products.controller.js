@@ -1,3 +1,4 @@
+const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
 const ProductModel = require("../models/Products");
 
 const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch, dbUpdateProductByIdPut } = require("../services/products.service");
@@ -11,11 +12,7 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {       // Capturando la excepcion
-        console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
-        res.status( 500 ).json({                  // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
-            ok: false,
-            msg: 'Error al obtener todos los productos'
-        });   
+        handleResponseError( res, 500, error, 'Error al obtener todos los productos' );   
     }
 
 }
@@ -36,11 +33,7 @@ async function getProductById( req, res ) {
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        console.error( error );
-        res.status( 500 ).json({
-            ok: false,
-            msg: 'Error al obtener un producto por ID'
-        });
+        handleResponseError( res, 500, error, 'Error al obtener un producto por ID' );
     }
 
 }
@@ -182,11 +175,7 @@ async function removeProductById( req, res ) {
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        console.error( error );
-        res.status( 500 ).json({
-            ok: false,
-            msg: 'Error al eliminar un producto por ID'
-        });
+        handleResponseError( res, 500, error, 'Error al eliminar un producto por ID' );
     }
 
 }
