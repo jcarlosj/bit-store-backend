@@ -7,8 +7,13 @@ const handleResponseSuccess = ( res, statusCode, data ) => {
     });
 }
 
-const handleResponseError = ( res, statusCode, error, msg ) => {
-    console.error( error );             // Mostramos el mensaje de error al desarrollador en la terminal
+const handleResponseError = ( res, statusCode, msg, error ) => {
+    console.log(error);
+    
+    if( error ) {
+        console.error( error );                // Mostramos el mensaje de error al desarrollador en la terminal
+    }
+    
 
     res.status( statusCode ).json({            // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
         ok: false,

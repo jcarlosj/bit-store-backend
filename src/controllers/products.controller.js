@@ -12,7 +12,7 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {       // Capturando la excepcion
-        handleResponseError( res, 500, error, 'Error al obtener todos los productos' );   
+        handleResponseError( res, 500, 'Error al obtener todos los productos', error  );   
     }
 
 }
@@ -24,16 +24,13 @@ async function getProductById( req, res ) {
         const data = await dbGetProductById( productId );
 
         if( ! data ) {
-            return res.status( 404 ).json({
-                ok: false,
-                msg: 'Producto no encontrado'
-            });
+            return handleResponseError( res, 404, 'Producto no encontrado' );
         }
 
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        handleResponseError( res, 500, error, 'Error al obtener un producto por ID' );
+        handleResponseError( res, 500, 'Error al obtener un producto por ID', error );
     }
 
 }
@@ -84,10 +81,7 @@ async function updateProductByIdPatch( req, res ) {
         const data = await dbUpdateProductByIdPatch( productId, inputData );
 
         if( ! data ) {
-            return res.status( 404 ).json({
-                ok: false,
-                msg: 'Producto no encontrado'
-            });
+            return handleResponseError( res, 404, 'Producto no encontrado' );
         }
 
         handleResponseSuccess( res, 200, data );
@@ -126,10 +120,7 @@ async function updateProductByIdPut( req, res ) {
         const data = await dbUpdateProductByIdPut( productId, inputData );
 
         if( ! data ) {
-            return res.status( 404 ).json({
-                ok: false,
-                msg: 'Producto no encontrado'
-            });
+            return handleResponseError( res, 404, 'Producto no encontrado' );
         }
     
         handleResponseSuccess( res, 200, data );
@@ -166,16 +157,13 @@ async function removeProductById( req, res ) {
         const data = await dbRemoveProductById( productId );
 
         if( ! data ) {
-            return res.status( 404 ).json({
-                ok: false,
-                msg: 'Producto no encontrado'
-            });
+            return handleResponseError( res, 404, 'Producto no encontrado' );
         }
 
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        handleResponseError( res, 500, error, 'Error al eliminar un producto por ID' );
+        handleResponseError( res, 500, 'Error al eliminar un producto por ID', error );
     }
 
 }
