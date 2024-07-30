@@ -30,7 +30,13 @@ const ProductSchema = new mongoose.Schema({
     state: {
         type: Boolean,
         default: true
-    }
+    },
+    // creationDate: {
+    //     type: Date,
+    //     default: Date.now()
+    // }
+}, {
+    timestamps: true
 });
 
 /** Crear el modelo de datos a partir de la estructura de datos */
