@@ -14,14 +14,32 @@ const handleResponseError = ( res, statusCode, msg, error ) => {
         console.error( error );                // Mostramos el mensaje de error al desarrollador en la terminal
     }
     
+    const errors = verifyFieldErrors( error );
 
     res.status( statusCode ).json({            // Enviando un objeto JSON como respuesta al usuario que realizo la peticion
         ok: false,
         msg: msg,
-        errors: 'Aqui van los errores de los campos'
+        errors: errors
     }); 
 }
  
+const verifyFieldErrors = ( error ) => {
+    const errors = {};      // Define objeto donde se almacenaran los mensajes de error y el nombre del campo que produce el error
+
+    /** Validamos si existen los errores de validacion */
+    if( error.name === 'ValidationError' ) {
+
+        /** Iteramos el objeto de error.errors por cada una de las propiedades que contenga */
+        for( let property in error.errors ) {
+            // console.log( '--->>>', property );
+            errors[ property ] = error.errors[ property ].message; 
+        }
+
+        // console.errors( errors );
+    }
+
+    return errors;
+}
 
 module.exports = {
     handleResponseSuccess,
