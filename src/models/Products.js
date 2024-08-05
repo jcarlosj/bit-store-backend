@@ -3,6 +3,12 @@ const mongoose = require( 'mongoose' );
 /** Definir la estructura de datos (nuestro documento) */
 const ProductSchema = new mongoose.Schema({
     // Definir propiedades, atributos o campos (Documento)
+    _id: {
+        type: String,
+        required: [ true, 'La referencia del producto es obligatoria' ],
+        minlength: [ 8, 'La referencia debe tener al menos 8 caracteres' ],
+        maxlength: [ 15, 'La referencia no puede exceder los 15 caracteres' ]
+    },
     name: {
         type: String,
         required: [ true, 'El nombre del producto es obligatorio.' ]
