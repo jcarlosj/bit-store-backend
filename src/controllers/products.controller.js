@@ -47,27 +47,7 @@ async function createProduct( req, res ) {
         handleResponseSuccess( res, 201, data );
     } 
     catch ( error ) {       // Capturando la excepcion
-
-        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
-
-        /** Validamos si existen errores de validacion */
-        if( error.name === 'ValidationError' ) {
-
-            /** Iteramos el objeto de errores por su nombre de propiedad */
-            for( let property in error.errors ) {
-                // console.info( '--->>> ', property );
-                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
-            }
-
-            // console.error( errors );
-        }
-
-        console.error( error );     // Mostramos el mensaje de error al desarrollador en la terminal
-        res.status( 500 ).json({                  // Enviando un objeto JSON al usuario que realizo la peticion
-            ok: false,
-            msg: 'Error al crear un producto nuevo',
-            errors: errors
-        });
+        handleResponseError( res, 500, 'Error al crear un producto nuevo', error );
     }
 
 }
@@ -87,26 +67,7 @@ async function updateProductByIdPatch( req, res ) {
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
-
-        /** Validamos si existen errores de validacion */
-        if( error.name === 'ValidationError' ) {
-
-            /** Iteramos el objeto de errores por su nombre de propiedad */
-            for( let property in error.errors ) {
-                // console.info( '--->>> ', property );
-                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
-            }
-
-            // console.error( errors );
-        }
-
-        console.error( error );
-        res.status( 500 ).json({
-            ok: false,
-            msg: 'Error al actualizar parcialmente el producto por ID',
-            errors: errors
-        });
+        handleResponseError( res, 500, 'Error al actualizar parcialmente el producto por ID', error );
     }
     
 }
@@ -126,26 +87,7 @@ async function updateProductByIdPut( req, res ) {
         handleResponseSuccess( res, 200, data );
     } 
     catch ( error ) {
-        const errors = {};  // Define el objeto donde se almacenaran los mensajes de error por cada propiedad del Modelo que infrinjamos
-
-        /** Validamos si existen errores de validacion */
-        if( error.name === 'ValidationError' ) {
-
-            /** Iteramos el objeto de errores por su nombre de propiedad */
-            for( let property in error.errors ) {
-                // console.info( '--->>> ', property );
-                errors[ property ] = error.errors[ property ].message;      // Asignamos el mensaje de error a la respectiva propiedad en el objeto errors
-            }
-
-            // console.error( errors );
-        }
-
-        console.error( error );
-        res.status( 500 ).json({
-            ok: false,
-            msg: 'Error al actualizar totalmente el producto por ID',
-            errors: errors
-        });
+        handleResponseError( res, 500, 'Error al actualizar totalmente el producto por ID', error );
     }
 
 }
