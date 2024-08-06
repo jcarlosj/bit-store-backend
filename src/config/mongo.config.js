@@ -1,4 +1,5 @@
 const mongoose = require( 'mongoose' );
+const { ensureIndexes } = require('../models/Products');
 
 
 const dbConnection = async () => {
@@ -6,6 +7,8 @@ const dbConnection = async () => {
         await mongoose.connect( 'mongodb://localhost:27017/db_shop', {} );  
         
         console.log( 'Base de datos inicializado exitosamente' );
+
+        await ensureIndexes();
     } 
     catch ( error ) {
         console.error( error );

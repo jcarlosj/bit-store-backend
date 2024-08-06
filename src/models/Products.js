@@ -3,7 +3,7 @@ const mongoose = require( 'mongoose' );
 /** Definir la estructura de datos (nuestro documento) */
 const ProductSchema = new mongoose.Schema({
     // Definir propiedades, atributos o campos (Documento)
-    _id: {
+    reference: {
         type: String,
         required: [ true, 'La referencia del producto es obligatoria' ],
         minlength: [ 8, 'La referencia debe tener al menos 8 caracteres' ],
@@ -45,6 +45,8 @@ const ProductSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Define o Forza la creación de un índice único ( reference, reference-1, reference_1 )
+ProductSchema.index({ reference: 1 }, { unique: true });
 
 ProductSchema.pre( [ 'findOneAndUpdate', 'findByIdAndUpdate' ], function() {
     
@@ -107,4 +109,19 @@ const ProductModel = mongoose.model(
 );
 
 
-module.exports = ProductModel;
+// Funcion que Crea los indices definidos con index
+const ensureIndexes = () => {
+    ProductModel.createIndexes()
+        .then( () => { 
+            console.log( 'Indices asegurados en el modelo ProductModel' );
+        } )
+        .catch( ( error ) => { 
+            console.error( 'Error al aserurar la creación de los indices', error );
+        } );
+}
+
+
+module.exports = {
+    ProductModel,
+    ensureIndexes
+};
