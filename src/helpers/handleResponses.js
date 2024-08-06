@@ -40,7 +40,7 @@ const verifyFieldErrors = ( error ) => {
 
     // Manejo de errores de clave duplicada
     if( error.code === 11000 ) {
-        errors[ '_id' ] = 'La referencia ya existe. Esta debe ser un valor único'
+        errors[ 'reference' ] = 'La referencia ya existe. Esta debe ser un valor único'
     }
 
     return errors;
