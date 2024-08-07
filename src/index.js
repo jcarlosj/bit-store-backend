@@ -9,7 +9,8 @@ app.use( express.json() );      // Ampliamos la capacidad de interpretar y enten
 /** Definir nuestras rutas o endpoints */
 app.use( '/', require( './routes/pages.routes' ) );                         // http://localhost:3000/
 app.use( '/api/products', require( './routes/products.routes' ) );          // http://localhost:3000/api/products  
-app.use( '/api/categories', require( './routes/categories.routes' )  );     // http://localhost:3000/api/categories
+app.use( '/api/categories', require( './routes/categories.routes' ) );      // http://localhost:3000/api/categories
+app.use( '/api/auth', require( './routes/auth.routes' ) );                  // http://localhost:3000/api/auth
 
 /** Invocar la conexion a nuestra base datos MongoDB usando Mongoose */
 dbConnection();
