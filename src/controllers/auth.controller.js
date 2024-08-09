@@ -1,7 +1,14 @@
-const register = ( req, res ) => {
+const { dbGetUserByUsername } = require("../services/auth.service");
+
+
+const register = async ( req, res ) => {
+    // Paso 1: Obtener los datos a registrar (usuario)
+    const inputData = req.body;
+
     res.json({
         ok: true,
-        msg: 'Registra un usuario'
+        msg: 'Registra un usuario',
+        data: inputData
     });
 }
 
