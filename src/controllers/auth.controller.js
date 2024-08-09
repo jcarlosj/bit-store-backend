@@ -1,5 +1,5 @@
 const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
-const { dbGetUserByUsername } = require("../services/auth.service");
+const { dbGetUserByUsername, registerUser } = require("../services/auth.service");
 
 
 const register = async ( req, res ) => {
@@ -14,10 +14,16 @@ const register = async ( req, res ) => {
             return handleResponseError( res, 404, 'El usuario a registar ya existe' );
         }
 
-        handleResponseSuccess( res, 201, userFound );
+        // Paso 3: Si no existe el usuario, entonces registre el nuevo usuario
+        const data = await registerUser( inputData );
+
+        // Paso Opcional: General Token con usuario registrado 'data'
+
+        // Paso 4: Responder al cliente, si el usuario a sido registrado (Opcional enviar el Token para acceder al sistema)
+        handleResponseSuccess( res, 201, data );
     } 
     catch ( error ) {
-        handleResponseError( res, 500, 'Error al verificar si el usuario existe', error );
+        handleResponseError( res, 500, 'Error al verificar y registrar el usuario existe', error );
     }
     
 }
