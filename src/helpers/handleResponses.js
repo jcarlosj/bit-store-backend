@@ -27,7 +27,7 @@ const verifyFieldErrors = ( error ) => {
     const errors = {};      // Define objeto donde se almacenaran los mensajes de error y el nombre del campo que produce el error
 
     /** Validamos si existen los errores de validacion */
-    if( error.name === 'ValidationError' ) {
+    if( error?.name === 'ValidationError' ) {
 
         /** Iteramos el objeto de error.errors por cada una de las propiedades que contenga */
         for( let property in error.errors ) {
@@ -39,7 +39,7 @@ const verifyFieldErrors = ( error ) => {
     }
 
     // Manejo de errores de clave duplicada
-    if( error.code === 11000 ) {
+    if( error?.code === 11000 ) {
         errors[ 'reference' ] = 'La referencia ya existe. Esta debe ser un valor único'
     }
 
