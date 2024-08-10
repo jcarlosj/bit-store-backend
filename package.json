@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "API para un ecommerce básico",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "mongoose": "^8.5.1"
   }
