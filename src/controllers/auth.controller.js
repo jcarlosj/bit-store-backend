@@ -35,49 +35,45 @@ const login = async ( req, res ) => {
     // Paso 1: Obtener los datos para autenticar el usuario (username, password)
     const inputData = req.body;
 
-    // Paso 2: Verificar si el usuario existe DB ---> email
-    const userFound = await dbGetUserByUsername( inputData.username );
+    try {
+        // Paso 2: Verificar si el usuario existe DB ---> email
+        const userFound = await dbGetUserByUsername( inputData.username );
 
-    if( ! userFound ) {
-        res.status( 404 ).json({
-            ok: false,
-            msg: 'El usuario no esta registrado. Por favor registrese!'
-        });
+        if( ! userFound ) {
+            return handleResponseError( res, 404, 'El usuario no esta registrado. Por favor registrese!' );
+        } 
+
+        // Paso 3: Confirmar si la contraseña es correcta 
+        const isValidPassword = compareSync(
+            inputData.password,     // Password sin encriptar de la data pura obtendida
+            userFound.password      // Password encriptado que viene de la BD
+        );
+
+        if( ! isValidPassword ) {
+            return handleResponseError( res, 404, 'Contraseña invalida' );
+        }
+        
+        // Paso 4: Generar una autenticación pasiva (TOKEN)
+        const payload = {
+            username: userFound.username,
+            name: userFound.name,
+            role: userFound.role
+        };
+
+        const token = sign(
+            payload,                    // Payload (Carga Util)
+            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
+            { expiresIn: '1h' }         // Configuracion (expiracion del token)
+        );
+
+
+        // Paso 5: Responder al cliente enviandole el Token
+        handleResponseSuccess( res, 200, token );
     } 
-
-    // Paso 3: Confirmar si la contraseña es correcta 
-    const isValidPassword = compareSync(
-        inputData.password,     // Password sin encriptar de la data pura obtendida
-        userFound.password      // Password encriptado que viene de la BD
-    );
-
-    if( ! isValidPassword ) {
-        return res.status( 404 ).json({
-            ok: false,
-            msg: 'Contraseña invalida'
-        });
+    catch ( error ) {
+        handleResponseError( res, 500, 'Error al autenticar el usuario', error );
     }
-    
-    // Paso 4: Generar una autenticación pasiva (TOKEN)
-    const payload = {
-        username: userFound.username,
-        name: userFound.name,
-        role: userFound.role
-    };
 
-    const token = sign(
-        payload,                    // Payload (Carga Util)
-        '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
-        { expiresIn: '1h' }         // Configuracion (expiracion del token)
-    );
-
-
-    // Paso 5: Responder al cliente enviandole el Token
-    res.status( 200 ).json({
-        ok: true,
-        msg: 'Autentica un usuario',
-        token: token
-    });
 }
 
 const reNewToken = ( req, res ) => {

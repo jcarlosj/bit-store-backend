@@ -29,7 +29,7 @@
                     <mxGeometry x="560" y="300" width="60" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" value="" style="group" vertex="1" connectable="0" parent="1">
-                    <mxGeometry x="330" y="140" width="85" height="60" as="geometry"/>
+                    <mxGeometry x="550" y="140" width="85" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="13">
                     <mxGeometry width="85" height="40" as="geometry"/>
@@ -99,6 +99,12 @@
                 </mxCell>
                 <mxCell id="40" value="329845435" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
                     <mxGeometry x="562.5" y="220" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="username" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="pássword" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="40" width="60" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
