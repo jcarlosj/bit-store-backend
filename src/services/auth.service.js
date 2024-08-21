@@ -1,5 +1,6 @@
 const { genSaltSync, hashSync } = require( 'bcrypt' );
 const UserModel = require("../models/User");
+const { encryptedPassword } = require('../helpers/bcrypt.helper');
 
 const dbGetUserByUsername = async ( email ) => {
 
@@ -15,11 +16,7 @@ const registerUser = async ( newUser ) => {
     console.log( 'Data procesada por la clase UserModel: ', dbUser );
 
     // Paso 2: Encriptar la contraseña
-    const salt = genSaltSync();         // Generando una cadena aleatoria para combinar
-    console.log( 'salt: ', salt );
-
-    const hashPassword = hashSync( newUser.password, salt );    // Combinando la cadena aleatoria con el password del nuevo usuario
-    console.log( 'hashPassword: ', hashPassword );
+    const hashPassword = encryptedPassword( newUser.password );
 
     dbUser.password = hashPassword;        // Actualizando la propiedad 'password' en el objeto (dbUser)
     console.log( 'Data procesada por la clase UserModel: ', dbUser );

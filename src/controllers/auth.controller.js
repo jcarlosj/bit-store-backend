@@ -1,8 +1,7 @@
-const { compareSync } = require( 'bcrypt' );
-const { sign } = require( 'jsonwebtoken' );
-
 const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
 const { dbGetUserByUsername, registerUser } = require("../services/auth.service");
+const { generateToken } = require('../helpers/jwt.helper');
+const { verifyEncryptedPassword } = require('../helpers/bcrypt.helper');
 
 
 const register = async ( req, res ) => {
@@ -44,28 +43,18 @@ const login = async ( req, res ) => {
         } 
 
         // Paso 3: Confirmar si la contraseña es correcta 
-        const isValidPassword = compareSync(
-            inputData.password,     // Password sin encriptar de la data pura obtendida
-            userFound.password      // Password encriptado que viene de la BD
-        );
+        const isValidPassword = verifyEncryptedPassword( inputData.password, userFound.password );
 
         if( ! isValidPassword ) {
             return handleResponseError( res, 404, 'Contraseña invalida' );
         }
         
         // Paso 4: Generar una autenticación pasiva (TOKEN)
-        const payload = {
+        const token = generateToken({
             username: userFound.username,
             name: userFound.name,
             role: userFound.role
-        };
-
-        const token = sign(
-            payload,                    // Payload (Carga Util)
-            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
-            { expiresIn: '1h' }         // Configuracion (expiracion del token)
-        );
-
+        });
 
         // Paso 5: Responder al cliente enviandole el Token
         handleResponseSuccess( res, 200, token );
