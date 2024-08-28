@@ -2,6 +2,7 @@ const { handleResponseSuccess, handleResponseError } = require("../helpers/handl
 const { dbGetUserByUsername, registerUser } = require("../services/auth.service");
 const { generateToken } = require('../helpers/jwt.helper');
 const { verifyEncryptedPassword } = require('../helpers/bcrypt.helper');
+const { verify, sign } = require( 'jsonwebtoken' );
 
 
 const register = async ( req, res ) => {
@@ -66,10 +67,51 @@ const login = async ( req, res ) => {
 }
 
 const reNewToken = ( req, res ) => {
-    res.json({
-        ok: true,
-        msg: 'Actualiza el Token del usuario logueado'
-    });
+    // Paso 1: Obtener el token del header de la peticion para validar que se envia
+    const token = req.header( 'X-Token' );
+    
+    if( ! token ) {
+        return res.status( 404 ).json({
+            ok: false,
+            msg: 'Error al obtener el Token'
+        });
+    }
+
+    try {
+        // Paso 2: Verificar autenticidad del Token
+        const payload = verify(
+            token,                      // Token valido que envia el cliente
+            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
+        );
+
+        // Paso 3: Eliminar propiedades no requeridas en el Payload
+        delete payload.iat;
+        delete payload.exp;
+
+        // Paso 4: Renovar el Token
+        const newToken = sign(  
+            payload,                    // Payload (Carga Util)
+            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
+            { expiresIn: '1h' }         // Configuracion (expiracion del token)
+        );
+
+        console.log( payload );
+
+        // Paso 5: Reenviar el token nuevo al cliente
+        res.json({
+            ok: true,
+            token: newToken
+        });
+    } 
+    catch (error) {
+        console.error( error );
+        res.json({
+            ok: false,
+            msg: 'Token no valido'
+        });
+    }
+
+    
 }
 
 
