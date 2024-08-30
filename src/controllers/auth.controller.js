@@ -67,28 +67,11 @@ const login = async ( req, res ) => {
 }
 
 const reNewToken = ( req, res ) => {
-    // Paso 1: Obtener el token del header de la peticion para validar que se envia
-    const token = req.header( 'X-Token' );
     
-    if( ! token ) {
-        return res.status( 404 ).json({
-            ok: false,
-            msg: 'Error al obtener el Token'
-        });
-    }
+    const payload = req.authUser;
 
     try {
-        // Paso 2: Verificar autenticidad del Token
-        const payload = verify(
-            token,                      // Token valido que envia el cliente
-            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
-        );
-
-        // Paso 3: Eliminar propiedades no requeridas en el Payload
-        delete payload.iat;
-        delete payload.exp;
-
-        // Paso 4: Renovar el Token
+        // Paso 1: Renovar el Token
         const newToken = sign(  
             payload,                    // Payload (Carga Util)
             '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
@@ -97,18 +80,11 @@ const reNewToken = ( req, res ) => {
 
         console.log( payload );
 
-        // Paso 5: Reenviar el token nuevo al cliente
-        res.json({
-            ok: true,
-            token: newToken
-        });
+        // Paso 2: Reenviar el token nuevo al cliente 
+        handleResponseSuccess( res, 200, newToken );
     } 
-    catch (error) {
-        console.error( error );
-        res.json({
-            ok: false,
-            msg: 'Token no valido'
-        });
+    catch ( error ) {
+        handleResponseError( res, 500, 'Token no valido', error );
     }
 
     

@@ -1,5 +1,6 @@
 const { Router } = require( 'express' );
 const { register, login, reNewToken } = require('../controllers/auth.controller');
+const { authUser } = require('../middlewares/auth-user.middleware');
 
 const router = Router();
 
@@ -7,7 +8,7 @@ const router = Router();
 // http://localhost:3000/api/auth
 router.post( '/register', register );           // http://localhost:3000/api/auth/register
 router.post( '/login', login );                 // http://localhost:3000/api/auth/login
-router.get( '/re-new-token', reNewToken );      // http://localhost:3000/api/auth/re-new-token
+router.get( '/re-new-token', authUser, reNewToken );      // http://localhost:3000/api/auth/re-new-token
 
 
 module.exports = router;

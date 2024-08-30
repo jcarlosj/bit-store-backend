@@ -4,7 +4,7 @@ const authUser = ( req, res, next ) => {
     console.log( 'Hola soy el Middleware de Autenticacion' );
 
     // Paso 1: Obtener el token del header de la peticion para validar que se envia
-    const token = req.header( 'X-Token' );
+    const token = req.header( 'X-Token' ); 
 
     if( ! token ) {
         return res.status( 404 ).json({
@@ -24,7 +24,8 @@ const authUser = ( req, res, next ) => {
         delete payload.iat;
         delete payload.exp;
 
-        console.log( payload );
+        req.authUser = payload;
+        // console.log( req );
 
         next();
     } 
