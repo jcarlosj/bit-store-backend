@@ -1,6 +1,7 @@
 const express = require( 'express' );
 const { dbConnection } = require('./config/mongo.config');
 const app = express();
+const PORT = process.env.PORT;
 
 /** Middleware */
 app.use( express.static( 'views' ) );
@@ -17,6 +18,6 @@ dbConnection();
 
 
 /** Lanza un servidor web usando Node/Express -> http://localhost:3000 */
-app.listen( 3000, function() {
-    console.log( 'Server running on 3000' );
+app.listen( PORT, function() {
+    console.log( `Server running on http://localhost:${ PORT }` );
 });
