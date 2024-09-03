@@ -1,4 +1,6 @@
-const { verify } = require("jsonwebtoken");
+const { handleResponseError } = require("../helpers/handleResponses");
+const { verifyToken } = require("../helpers/jwt.helper");
+
 
 const authUser = ( req, res, next ) => {
     console.log( 'Hola soy el Middleware de Autenticacion' );
@@ -7,18 +9,12 @@ const authUser = ( req, res, next ) => {
     const token = req.header( 'X-Token' ); 
 
     if( ! token ) {
-        return res.status( 404 ).json({
-            ok: false,
-            msg: 'Error al obtener el Token'
-        });
+        return handleResponseError( res, 404, 'Error al obtener el Token' );
     }
 
     try {
         // Paso 2: Verificar autenticidad del Token
-        const payload = verify(
-            token,                      // Token valido que envia el cliente
-            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
-        );
+        const payload = verifyToken( token );
 
         // Paso 3: Eliminar propiedades no requeridas en el Payload
         delete payload.iat;
@@ -30,13 +26,8 @@ const authUser = ( req, res, next ) => {
         next();
     } 
     catch ( error ) {
-        console.error( error );
-        res.json({
-            ok: false,
-            msg: 'Token no valido'
-        });
+        handleResponseError( res, 500, 'Token no valido', error );
     }
-
     
 }
 

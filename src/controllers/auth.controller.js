@@ -72,13 +72,8 @@ const reNewToken = ( req, res ) => {
 
     try {
         // Paso 1: Renovar el Token
-        const newToken = sign(  
-            payload,                    // Payload (Carga Util)
-            '78ih89gn#t6tr7grt97@',     // PALABRA-CLAVE (Semilla)
-            { expiresIn: '1h' }         // Configuracion (expiracion del token)
-        );
-
-        console.log( payload );
+        const newToken = generateToken( payload );
+        // console.log( payload );
 
         // Paso 2: Reenviar el token nuevo al cliente 
         handleResponseSuccess( res, 200, newToken );
@@ -87,7 +82,6 @@ const reNewToken = ( req, res ) => {
         handleResponseError( res, 500, 'Token no valido', error );
     }
 
-    
 }
 
 
