@@ -38,6 +38,11 @@ async function getProductById( req, res ) {
 // Crear un nuevo producto
 async function createProduct( req, res ) {        
     const inputData = req.body;                     // Obteniendo los datos de la peticion
+    const payload = req.authUser;                   // Obteniendo el payload del Token
+
+    console.log( '>>>> ', payload );
+
+    inputData.userId = payload.id;
     // console.log( '>> inputData >>', inputData );
 
     try {

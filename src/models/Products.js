@@ -37,6 +37,10 @@ const ProductSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    userId: {
+        type: String,
+        required: [ true, 'El id del usuario que registra el producto es requerido' ]
+    }
     // creationDate: {
     //     type: Date,
     //     default: Date.now()

@@ -52,6 +52,7 @@ const login = async ( req, res ) => {
         
         // Paso 4: Generar una autenticación pasiva (TOKEN)
         const token = generateToken({
+            id: userFound._id,
             username: userFound.username,
             name: userFound.name,
             role: userFound.role
