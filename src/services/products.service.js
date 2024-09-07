@@ -11,6 +11,22 @@ async function dbGetProducts () {
     return await ProductModel.find({});
 }
 
+async function dbGetPaginatedProducts ( page, pageSize ) {
+    return await ProductModel.find()
+        .skip( ( page - 1 ) * pageSize )
+        .limit( pageSize )
+        .sort({ createAt: -1 });
+
+        //  ( page - 1 ) * pageSize
+        // ( 1 - 1 ) * 6  ---> 0
+        // ( 2 - 1 ) * 6  ---> 6
+        // ( 3 - 1 ) * 6  ---> 12
+        // ( 4 - 1 ) * 6  ---> 18
+
+    // Productos   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+    // Paginas     1                 2                     3                       4
+}
+
 async function dbGetProductById( id ) {
     // Obteniendo un producto por ID de la base de datos usando el Modelo Diseñado para esta Entidad
     return await ProductModel.findOne({ _id: id });
@@ -46,6 +62,7 @@ async function dbUpdateProductByIdPut( id, updateProduct ) {
 module.exports = {
     dbCreateProduct,
     dbGetProducts,
+    dbGetPaginatedProducts,
     dbGetProductById,
     dbRemoveProductById,
     dbUpdateProductByIdPatch,

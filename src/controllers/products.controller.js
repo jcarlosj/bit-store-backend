@@ -1,7 +1,7 @@
 const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
 const ProductModel = require("../models/Products");
 
-const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch, dbUpdateProductByIdPut } = require("../services/products.service");
+const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch, dbUpdateProductByIdPut, dbGetPaginatedProducts } = require("../services/products.service");
 
 // Obtener todos los productos
 async function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
@@ -15,6 +15,19 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
         handleResponseError( res, 500, 'Error al obtener todos los productos', error  );   
     }
 
+}
+
+// Obtener todos los productos paginados
+async function getPaginatedProducts( req, res ) {
+    const 
+        page = parseInt( req.params.page ) || 1,
+        pageSize = parseInt( req.params.pageSize ) || 10;
+
+    const data = await dbGetPaginatedProducts( page, pageSize );
+
+    console.log( page, pageSize, data );
+
+    res.json({ page, pageSize, data });
 }
 
 async function getProductById( req, res ) {
@@ -118,6 +131,7 @@ async function removeProductById( req, res ) {
 
 module.exports = {
     getProducts,
+    getPaginatedProducts,
     getProductById,
     createProduct,
     removeProductById,
