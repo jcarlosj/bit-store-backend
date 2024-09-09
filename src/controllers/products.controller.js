@@ -20,14 +20,27 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
 // Obtener todos los productos paginados
 async function getPaginatedProducts( req, res ) {
     const 
+        category = req.params.category,
         page = parseInt( req.params.page ) || 1,
         pageSize = parseInt( req.params.pageSize ) || 10;
 
-    const data = await dbGetPaginatedProducts( page, pageSize );
+    const filter = {};
+    if( category !== 'all' ) {
+        filter.category = category;     // { category: 'electronica' }
+    }
 
-    console.log( page, pageSize, data );
+    try {
+        const data = await dbGetPaginatedProducts( page, pageSize, filter );
 
-    res.json({ page, pageSize, data });
+        console.log( page, pageSize, data );
+
+        handleResponseSuccess( res, 200, { page, pageSize, data })
+    
+    } 
+    catch ( error ) {
+        handleResponseError( res, 500, 'Error al obtener todos los productos', error );
+    }
+    
 }
 
 async function getProductById( req, res ) {

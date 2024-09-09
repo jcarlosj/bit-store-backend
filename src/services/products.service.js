@@ -11,8 +11,8 @@ async function dbGetProducts () {
     return await ProductModel.find({});
 }
 
-async function dbGetPaginatedProducts ( page, pageSize ) {
-    return await ProductModel.find()
+async function dbGetPaginatedProducts ( page, pageSize, filter ) {
+    return await ProductModel.find( filter )
         .skip( ( page - 1 ) * pageSize )
         .limit( pageSize )
         .sort({ createAt: -1 });

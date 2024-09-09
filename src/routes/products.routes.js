@@ -5,10 +5,13 @@ const router = Router();
 
 /** Definir todas las rutas de la API para la data de productos */
 // http://localhost:3000/api/products/<id-hash> 
-router.get( '/all', getProducts );                          // Obtiene todos los productos
-router.get( '/:id', getProductById );                       // Obtener un producto por ID
-router.get( '/:page/:pageSize', getPaginatedProducts );     // Obtener todos los productos paginados
-
+// router.get( '/', getProducts );                          // Obtiene todos los productos
+router.get( '/ref/:id', getProductById );                   // Obtener un producto por ID
+router.get( '/:category?/:page?/:pageSize?', getPaginatedProducts );   // Obtener todos los productos paginados
+    // http://localhost:3000/api/products/all               pagina: 1, total: 10
+    // http://localhost:3000/api/products/all/1/9           pagina: 1, total:  9
+    // http://localhost:3000/api/products/electronica       pagina: 1, total: 10
+    // http://localhost:3000/api/products/electronica/1/9   pagina: 1, total:  9, categoria: electronica
 
 router.post( '/', authUser, createProduct );              // Crea un nuevo producto
 router.put( '/:id', authUser, updateProductByIdPut );     // Actualiza todo el producto por ID
