@@ -20,6 +20,7 @@ async function getProducts( req, res ) {            // ---> http://localhost:300
 // Obtener todos los productos paginados
 async function getPaginatedProducts( req, res ) {
     const 
+        payload = req.authUser,
         category = req.params.category,
         page = parseInt( req.params.page ) || 1,
         pageSize = parseInt( req.params.pageSize ) || 10;
@@ -28,6 +29,11 @@ async function getPaginatedProducts( req, res ) {
     if( category !== 'all' ) {
         filter.category = category;     // { category: 'electronica' }
     }
+    if( payload ) {
+        filter.userId = payload.id;     // { userId: '66c63a200b72372eec9e13ff' }
+    }
+
+    // { category: 'electronica', userId: '66c63a200b72372eec9e13ff' }
 
     try {
         const data = await dbGetPaginatedProducts( page, pageSize, filter );

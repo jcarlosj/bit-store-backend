@@ -7,6 +7,13 @@ const router = Router();
 // http://localhost:3000/api/products/<id-hash> 
 // router.get( '/', getProducts );                          // Obtiene todos los productos
 router.get( '/ref/:id', getProductById );                   // Obtener un producto por ID
+
+
+router.get( '/user/:category?/:page?/:pageSize?', authUser, getPaginatedProducts );
+    // http://localhost:3000/api/products/user/all
+    // http://localhost:3000/api/products/user/all/1/9
+    // http://localhost:3000/api/products/user/electronica
+    // http://localhost:3000/api/products/user/electronica/1/9
 router.get( '/:category?/:page?/:pageSize?', getPaginatedProducts );   // Obtener todos los productos paginados
     // http://localhost:3000/api/products/all               pagina: 1, total: 10
     // http://localhost:3000/api/products/all/1/9           pagina: 1, total:  9
