@@ -2,7 +2,7 @@ const { productQueryObject } = require("../helpers/filter.helper");
 const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
 const ProductModel = require("../models/Products");
 
-const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch, dbUpdateProductByIdPut, dbGetPaginatedProducts } = require("../services/products.service");
+const { dbCreateProduct, dbGetProducts, dbGetProductById, dbRemoveProductById, dbUpdateProductByIdPatch, dbUpdateProductByIdPut, dbGetPaginatedProducts, dbCountRecords } = require("../services/products.service");
 
 // Obtener todos los productos
 async function getProducts( req, res ) {            // ---> http://localhost:3000/api/products/
@@ -28,11 +28,12 @@ async function getPaginatedProducts( req, res ) {
 
     try {
         const filter = productQueryObject({ payload, category });
+        const total = await dbCountRecords( filter );
         const data = await dbGetPaginatedProducts( page, pageSize, filter );
 
         console.log( page, pageSize, data );
 
-        handleResponseSuccess( res, 200, { page, pageSize, data })
+        handleResponseSuccess( res, 200, { products: data, page, pageSize, total });
     
     } 
     catch ( error ) {
