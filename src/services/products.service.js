@@ -58,7 +58,6 @@ async function dbUpdateProductByIdPut( id, updateProduct ) {
     );
 }
 
-
 module.exports = {
     dbCreateProduct,
     dbGetProducts,

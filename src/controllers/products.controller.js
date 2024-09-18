@@ -1,3 +1,4 @@
+const { productQueryObject } = require("../helpers/filter.helper");
 const { handleResponseSuccess, handleResponseError } = require("../helpers/handleResponses");
 const ProductModel = require("../models/Products");
 
@@ -25,17 +26,8 @@ async function getPaginatedProducts( req, res ) {
         page = parseInt( req.params.page ) || 1,
         pageSize = parseInt( req.params.pageSize ) || 10;
 
-    const filter = {};
-    if( category !== 'all' ) {
-        filter.category = category;     // { category: 'electronica' }
-    }
-    if( payload ) {
-        filter.userId = payload.id;     // { userId: '66c63a200b72372eec9e13ff' }
-    }
-
-    // { category: 'electronica', userId: '66c63a200b72372eec9e13ff' }
-
     try {
+        const filter = productQueryObject({ payload, category });
         const data = await dbGetPaginatedProducts( page, pageSize, filter );
 
         console.log( page, pageSize, data );
