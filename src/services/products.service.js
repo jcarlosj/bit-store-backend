@@ -11,7 +11,7 @@ async function dbGetProducts () {
     return await ProductModel.find({});
 }
 
-async function dbGetPaginatedProducts ( page, pageSize, filter ) {
+async function dbGetPaginatedProducts ( page, pageSize, filter = {} ) {
     return await ProductModel.find( filter )
         .skip( ( page - 1 ) * pageSize )
         .limit( pageSize )
@@ -58,7 +58,7 @@ async function dbUpdateProductByIdPut( id, updateProduct ) {
     );
 }
 
-async function dbCountRecords( filter ) {
+async function dbCountRecords( filter = {} ) {
     return await ProductModel.countDocuments( filter ); // Total de productos
 }
 
