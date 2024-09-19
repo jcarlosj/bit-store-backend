@@ -39,7 +39,7 @@ const ProductSchema = new mongoose.Schema({
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'CategoryModel'
+        ref: 'Categories'                       // Nombre de la coleccion
     }
     // creationDate: {
     //     type: Date,
@@ -50,7 +50,10 @@ const ProductSchema = new mongoose.Schema({
 });
 
 // Define o Forza la creación de un índice único ( reference, reference-1, reference_1 )
-ProductSchema.index({ reference: 1 }, { unique: true });
+ProductSchema.index(
+    { reference: 1, userId: 1 }, 
+    { unique: true }
+);
 
 ProductSchema.pre( [ 'findOneAndUpdate', 'findByIdAndUpdate' ], function() {
     

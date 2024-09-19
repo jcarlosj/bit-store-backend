@@ -8,14 +8,15 @@ async function dbCreateProduct ( newProduct ) {
 
 async function dbGetProducts () {
     // Obteniendo todos los datos de la base de datos usando el Modelo Diseñado para esta Entidad
-    return await ProductModel.find({});
+    return await ProductModel.find({}).populate( 'category' );
 }
 
 async function dbGetPaginatedProducts ( page, pageSize, filter = {} ) {
     return await ProductModel.find( filter )
         .skip( ( page - 1 ) * pageSize )
         .limit( pageSize )
-        .sort({ createAt: -1 });
+        .sort({ createAt: -1 })
+        .populate( 'category' );        // Nombre del campo a poblar
 
         //  ( page - 1 ) * pageSize
         // ( 1 - 1 ) * 6  ---> 0
@@ -29,12 +30,12 @@ async function dbGetPaginatedProducts ( page, pageSize, filter = {} ) {
 
 async function dbGetProductById( id ) {
     // Obteniendo un producto por ID de la base de datos usando el Modelo Diseñado para esta Entidad
-    return await ProductModel.findOne({ _id: id });
+    return await ProductModel.findOne({ _id: id }).populate( 'category' );
 }
 
 async function dbRemoveProductById( id ) {
     // return await ProductModel.findOneAndDelete({ _id: productId });
-    return await ProductModel.findByIdAndDelete( id );
+    return await ProductModel.findByIdAndDelete( id ).populate( 'category' );
 }
 
 async function dbUpdateProductByIdPatch( id, updateProduct ) {
@@ -55,7 +56,7 @@ async function dbUpdateProductByIdPut( id, updateProduct ) {
         { _id: id },
         updateProduct,
         { new: true, runValidators: true }
-    );
+    ).populate( 'category' );
 }
 
 async function dbCountRecords( filter = {} ) {

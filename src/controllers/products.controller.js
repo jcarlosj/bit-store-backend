@@ -106,6 +106,12 @@ async function updateProductByIdPatch( req, res ) {
 async function updateProductByIdPut( req, res ) {
     const productId = req.params.id;                // Obteniendo el valor pasado por la URL como parametro
     const inputData = req.body;                     // Obteniendo los datos de la peticion
+    const payload = req.authUser;                   // Obteniendo el payload del Token
+
+    console.log( '>>>> ', payload );
+
+    inputData.userId = payload.id;
+
 
     try {
         const data = await dbUpdateProductByIdPut( productId, inputData );

@@ -39,6 +39,7 @@ const verifyFieldErrors = ( error ) => {
     }
 
     // Manejo de errores de clave duplicada
+    // TODO: Validar si la actualizacion es PUT y evitar que este error se guarde, para permitir la actualizacion
     if( error?.code === 11000 ) {
         errors[ 'reference' ] = 'La referencia ya existe. Esta debe ser un valor único'
     }
