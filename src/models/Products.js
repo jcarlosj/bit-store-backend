@@ -26,10 +26,6 @@ const ProductSchema = new mongoose.Schema({
         required: [ true, 'La cantidad es obligatoria.' ],
         min: [ 1, 'La cantidad minima a registrar es de 1.' ]
     },
-    category: {
-        type: String,
-        required: [ true, 'La categoria es obligatoria' ],
-    },
     urlImage: {
         type: String
     },
@@ -41,10 +37,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'El id del usuario que registra el producto es requerido' ]
     },
-    categories: [{
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CategoryModel'
-    }]
+    }
     // creationDate: {
     //     type: Date,
     //     default: Date.now()
